@@ -4,7 +4,7 @@
         <div class="row py-5">
             <% for (let listing of allListings) { %>
                 <div class="col-md-3 py-3">
-                    <a href="/listings/<%- listing._id %>" class="text-decoration-none" target="_blank">
+                    <a href="/listings/<%- listing._id %>" class="text-decoration-none">
                         <div class="card">
                             <img src="<%- listing.image %>" class="card-img-top object-fit-cover" style="height : 180px" alt="img">
                             <div class="card-body">

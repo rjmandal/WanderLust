@@ -8,7 +8,7 @@ const WrapAsync = require("../utils/WrapAsync.js");
 
 const CustomError = require("../utils/CustomError.js");
 
-const listingSchema = require("../validateSchema.js");
+const { listingSchema } = require("../validateSchema.js");
 
 const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
@@ -49,7 +49,7 @@ router.get(
 router.get(
   "/listings/:id",
   WrapAsync(async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
+    const listing = await Listing.findById(req.params.id).populate("reviews");
     res.render("listings/show.ejs", { listing });
   })
 );

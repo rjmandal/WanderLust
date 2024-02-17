@@ -12,6 +12,8 @@ const app = express();
 
 const listingRoute = require("./routes/listing.js");
 
+const reviewRoute = require("./routes/review.js");
+
 const CustomError = require("./utils/CustomError.js");
 
 //ejs
@@ -36,13 +38,14 @@ async function main() {
 }
 
 app.use("/", listingRoute);
+app.use("/", reviewRoute);
 
 app.all("*", (req, res, next) => {
   next(new CustomError(404, "Page not found"));
 });
 
 app.use((err, req, res, next) => {
-  let { statusCode = 500, message = "Something went wrong" } = err;
+  let { status = 500, message = "Something went wrong" } = err;
   res.render("error.ejs", { message });
   // res.status(statusCode).send(message);
 });
