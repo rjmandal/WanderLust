@@ -32,46 +32,10 @@ router.post(
     listing.reviews.push(newReview);
     await newReview.save();
     await listing.save();
+    req.flash("success", "Review created Sucessfully");
     res.redirect(`/listings/${req.params.id}`);
   })
 );
-
-// //show all route
-// router.get(
-//   "/listings",
-//   WrapAsync(async (req, res) => {
-//     const allListings = await Listing.find({});
-//     res.render("listings/index.ejs", { allListings });
-//   })
-// );
-
-// //show route
-// router.get(
-//   "/listings/:id",
-//   WrapAsync(async (req, res) => {
-//     const listing = await Listing.findById(req.params.id);
-//     res.render("listings/show.ejs", { listing });
-//   })
-// );
-
-// //edit route
-// router.get(
-//   "/listings/:id/edit",
-//   WrapAsync(async (req, res) => {
-//     let listing = await Listing.findById(req.params.id);
-//     res.render("listings/edit.ejs", { listing });
-//   })
-// );
-
-// //update route
-// router.put(
-//   "/listings/:id",
-//   validateListing,
-//   WrapAsync(async (req, res, next) => {
-//     await Listing.findByIdAndUpdate(req.params.id, { ...req.body.listing });
-//     res.redirect(`/listings/${req.params.id}`);
-//   })
-// );
 
 //delete route
 router.delete(
@@ -80,6 +44,7 @@ router.delete(
     let { id, reviewId } = req.params;
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success", "Review deleted Sucessfully");
     res.redirect(`/listings/${id}`);
   })
 );
